@@ -1,7 +1,7 @@
 {
   "name": "no-cursing",
-  "version": "1.0.5",
-  "description": "Profanity filter for NodeJS.",
+  "version": "1.0.6",
+  "description": "Neat profanity filter for NodeJS.",
   "main": "src/filter.js",
   "scripts": {
     "test": "node src/test.js"

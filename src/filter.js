@@ -1,17 +1,17 @@
 const fs = require('fs');
 const csv = require('csv-parser');
 
-let profanityWords = [];
+let profanityList = [];
 
-function loadProfanityWords() {
+function loadProfanity() {
   return new Promise((resolve, reject) => {
     fs.createReadStream('src/profanity.csv')
       .pipe(csv())
       .on('data', (row) => {
-        profanityWords.push({ word: row.word, severity: row.severity || 'PROFANE' });
+        profanityList.push({ word: row.word, severity: row.severity || 'PROFANE' });
       })
       .on('end', () => {
-        resolve(profanityWords);
+        resolve(profanityList);
       })
       .on('error', (err) => {
         reject(err);
@@ -22,7 +22,7 @@ function loadProfanityWords() {
 function add(word, severity = 'PROFANE') {
   const validSeverities = ['PROFANE', 'SEXUAL', 'OFFENSIVE'];
   const severityMatch = severity.toUpperCase().match(/^SEVERITY:(\w+)$/);
-  
+
   if (severityMatch) {
     severity = severityMatch[1].toUpperCase();
   }
@@ -32,13 +32,13 @@ function add(word, severity = 'PROFANE') {
     return;
   }
 
-  profanityWords.push({ word, severity });
+  profanityList.push({ word, severity });
 }
 
 function filterText(text) {
   let filteredText = text;
 
-  profanityWords.forEach(({ word }) => {
+  profanityList.forEach(({ word }) => {
     const regex = new RegExp(`\\b${word}\\b`, 'gi');
     filteredText = filteredText.replace(regex, (match) => '*'.repeat(match.length));
   });
@@ -46,4 +46,4 @@ function filterText(text) {
   return filteredText;
 }
 
-module.exports = { loadProfanityWords, add, filterText };
+module.exports = { loadProfanity, add, filterText };
