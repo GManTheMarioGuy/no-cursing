@@ -4,7 +4,7 @@
   "description": "Profanity filter for NodeJS.",
   "main": "filter.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node src/test.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/GManTheMarioGuy/no-cursing#readme",
   "dependencies": {
-    "csv-parser": "^3.2.0"
+    "csv-parser": "^3.2.0",
+    "no-cursing": "^1.0.0"
   }
 }
