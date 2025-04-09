@@ -39,7 +39,8 @@ function filterText(text) {
   let filteredText = text;
 
   profanityList.forEach(({ word }) => {
-    const regex = new RegExp(`\\b${word}\\b`, 'gi');
+    const escapedWord = word.replace(/[.*+?^=!:${}()|\[\]\/\\]/g, "\\$&");
+    const regex = new RegExp(`${escapedWord}\\w*`, 'gi');
     filteredText = filteredText.replace(regex, (match) => '*'.repeat(match.length));
   });
 
