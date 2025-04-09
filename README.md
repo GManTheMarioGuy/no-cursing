@@ -13,7 +13,7 @@ Install with npm:
 `npm install no-cursing` 
 
 ## Examples
-Example of how this is used (also an example of how to use `add` to add words yourself)
+Example of how this is used (also an example of how to use `add` to add words yourself) This example also shows all the types that can be used with `add`.
 ```
 const { loadProfanity, add, filterText } = require('no-cursing');
 
