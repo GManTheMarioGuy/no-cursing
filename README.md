@@ -3,6 +3,8 @@ no-cursing is a profanity filter for NodeJS.
 
 **DISCLAIMER:** Source files such as .csv files contain profanity. Viewer discretion is advised!
 
+This is project open-source. Feel free to contribute!
+
 # Install
 Install with npm:
 `npm install no-cursing` 
@@ -25,4 +27,3 @@ const { loadProfanity, add, filterText } = require('no-cursing');
   }
 })();
 ```
-You can freely contribute to this project. (This project is open source)
