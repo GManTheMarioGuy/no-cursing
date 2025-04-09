@@ -1,4 +1,4 @@
-const { loadProfanityWords, add, filterText } = require('./filter');
+const { loadProfanityWords, add, filterText } = require('no-cursing');
 
 (async () => {
   try {
