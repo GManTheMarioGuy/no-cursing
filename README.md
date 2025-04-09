@@ -7,8 +7,8 @@ This is project open-source. Feel free to contribute!
 
 # Install
 Install with npm:
-`npm install no-cursing` 
 
+`npm install no-cursing` 
 
 ## Examples
 Example of how this is used (also an example of how to use `add` to add words yourself)
