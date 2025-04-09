@@ -35,12 +35,49 @@ function add(word, severity = 'PROFANE') {
   profanityList.push({ word, severity });
 }
 
+function createSubstitutionRegex(word) {
+  const substitutionMap = {
+    a: '[a@4]',
+    b: '[b8]',
+    c: '[c<]',
+    d: '[d]',
+    e: '[e3]',
+    f: '[f]',
+    g: '[g6]',
+    h: '[h]',
+    i: '[i1!]',
+    j: '[j]',
+    k: '[k]',
+    l: '[l1|]',
+    m: '[m]',
+    n: '[n]',
+    o: '[o0]',
+    p: '[p]',
+    q: '[q]',
+    r: '[r]',
+    s: '[s$5]',
+    t: '[t7+]',
+    u: '[u]',
+    v: '[v]',
+    w: '[w]',
+    x: '[x]',
+    y: '[y]',
+    z: '[z2]'
+  };
+
+  return word
+    .split('')
+    .map((char) => substitutionMap[char.toLowerCase()] || char)
+    .join('');
+}
+
 function filterText(text) {
   let filteredText = text;
 
   profanityList.forEach(({ word }) => {
     const escapedWord = word.replace(/[.*+?^=!:${}()|\[\]\/\\]/g, "\\$&");
-    const regex = new RegExp(`${escapedWord}\\w*`, 'gi');
+    const regexString = createSubstitutionRegex(escapedWord);
+    const regex = new RegExp(`${regexString}\\w*`, 'gi');
     filteredText = filteredText.replace(regex, (match) => '*'.repeat(match.length));
   });
 
