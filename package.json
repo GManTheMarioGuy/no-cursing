@@ -1,6 +1,6 @@
 {
   "name": "no-cursing",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Profanity filter for NodeJS.",
   "main": "src/filter.js",
   "scripts": {
@@ -28,6 +28,6 @@
   "homepage": "https://github.com/GManTheMarioGuy/no-cursing#readme",
   "dependencies": {
     "csv-parser": "^3.2.0",
-    "no-cursing": "^1.0.3"
+    "no-cursing": "^1.0.4"
   }
 }
