@@ -5,7 +5,7 @@ let profanityWords = [];
 
 function loadProfanityWords() {
   return new Promise((resolve, reject) => {
-    fs.createReadStream('profanity.csv')
+    fs.createReadStream('src/profanity.csv')
       .pipe(csv())
       .on('data', (row) => {
         profanityWords.push({ word: row.word, severity: row.severity || 'PROFANE' });
