@@ -1,0 +1,32 @@
+{
+  "name": "no-cursing",
+  "version": "1.0.0",
+  "description": "Profanity filter for NodeJS.",
+  "main": "filter.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GManTheMarioGuy/no-cursing.git"
+  },
+  "keywords": [
+    "profanity-filter",
+    "swear-filter",
+    "text-filter",
+    "profanity",
+    "filter",
+    "profanity-check",
+    "curse-words",
+    "word-filter"
+  ],
+  "author": "gmann",
+  "license": "WTFPL",
+  "bugs": {
+    "url": "https://github.com/GManTheMarioGuy/no-cursing/issues"
+  },
+  "homepage": "https://github.com/GManTheMarioGuy/no-cursing#readme",
+  "dependencies": {
+    "csv-parser": "^3.2.0"
+  }
+}
