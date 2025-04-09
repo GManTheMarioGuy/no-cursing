@@ -28,6 +28,6 @@
   "homepage": "https://github.com/GManTheMarioGuy/no-cursing#readme",
   "dependencies": {
     "csv-parser": "^3.2.0",
-    "no-cursing": "^1.0.0"
+    "no-cursing": "^1.0.3"
   }
 }
