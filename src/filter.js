@@ -1,11 +1,15 @@
 const fs = require('fs');
 const csv = require('csv-parser');
+const path = require('path');
+
+const packageDir = path.dirname(require.resolve('no-cursing/package.json'));
+const profanityFilePath = path.join(packageDir, 'src', 'profanity.csv');
 
 let profanityList = [];
 
 function loadProfanity() {
   return new Promise((resolve, reject) => {
-    fs.createReadStream('node_modules/no-cursing/src/profanity.csv')
+    fs.createReadStream(profanityFilePath)
       .pipe(csv())
       .on('data', (row) => {
         profanityList.push({ word: row.word, severity: row.severity || 'PROFANE' });
