@@ -93,12 +93,20 @@ function createSubstitutionRegex(word) {
 function filterText(text) {
   let filteredText = text;
 
+  const safeWords = new Set(
+    wordList.filter(({ level }) => level === 'SAFE').map(({ word }) => word.toLowerCase())
+  );
+
   wordList.forEach(({ word, level }) => {
     if (level === 'SAFE') return;
 
+    const normalizedWord = word.toLowerCase();
+    if (safeWords.has(normalizedWord)) return;
+
     const escapedWord = word.replace(/[.*+?^=!:${}()|\[\]\/\\]/g, "\\$&");
-    const regexString = createSubstitutionRegex(escapedWord);
-    const regex = new RegExp(`${regexString}\\w*`, 'gi');
+    const regexString = `\\b${createSubstitutionRegex(escapedWord)}\\b`;
+    const regex = new RegExp(regexString, 'gi');
+
     filteredText = filteredText.replace(regex, (match) => '*'.repeat(match.length));
   });
 
