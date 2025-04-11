@@ -3,19 +3,25 @@ const csv = require('csv-parser');
 const path = require('path');
 
 const packageDir = path.dirname(require.resolve('no-cursing/package.json'));
-const profanityFilePath = path.join(packageDir, 'src', 'profanity.csv');
+const wordsFilePath = path.join(packageDir, 'src', 'words.csv');
 
-let profanityList = [];
+let wordList = [];
 
-function loadProfanity() {
+function loadWords() {
   return new Promise((resolve, reject) => {
-    fs.createReadStream(profanityFilePath)
+    fs.createReadStream(wordsFilePath)
       .pipe(csv())
       .on('data', (row) => {
-        profanityList.push({ word: row.word, severity: row.severity || 'PROFANE' });
+        let level = row.level && row.level.toUpperCase() !== 'NONE' ? row.level.toUpperCase() : null;
+        let isSafe = row.issafe && row.issafe.toLowerCase() === 'true' ? 'SAFE' : level;
+        
+        wordList.push({
+          word: row.word,
+          level: isSafe || 'PROFANE',
+        });
       })
       .on('end', () => {
-        resolve(profanityList);
+        resolve(wordList);
       })
       .on('error', (err) => {
         reject(err);
@@ -23,20 +29,24 @@ function loadProfanity() {
   });
 }
 
-function add(word, severity = 'PROFANE') {
-  const validSeverities = ['PROFANE', 'SEXUAL', 'OFFENSIVE'];
-  const severityMatch = severity.toUpperCase().match(/^SEVERITY:(\w+)$/);
+function add(word, level = 'PROFANE', isSafe = false) {
+  const validLevels = ['PROFANE', 'SEXUAL', 'OFFENSIVE', 'SAFE'];
 
-  if (severityMatch) {
-    severity = severityMatch[1].toUpperCase();
+  if (isSafe) {
+    level = 'SAFE';
   }
 
-  if (!validSeverities.includes(severity)) {
-    console.error(`Invalid severity: ${severity}. Valid severities are: ${validSeverities.join(', ')}`);
+  const levelMatch = level.toUpperCase().match(/^LEVEL:(\w+)$/);
+  if (levelMatch) {
+    level = levelMatch[1].toUpperCase();
+  }
+
+  if (!validLevels.includes(level)) {
+    console.error(`Invalid level: ${level}. Valid levels are: ${validLevels.join(', ')}`);
     return;
   }
 
-  profanityList.push({ word, severity });
+  wordList.push({ word, level });
 }
 
 function createSubstitutionRegex(word) {
@@ -78,7 +88,9 @@ function createSubstitutionRegex(word) {
 function filterText(text) {
   let filteredText = text;
 
-  profanityList.forEach(({ word }) => {
+  wordList.forEach(({ word, level }) => {
+    if (level === 'SAFE') return;
+
     const escapedWord = word.replace(/[.*+?^=!:${}()|\[\]\/\\]/g, "\\$&");
     const regexString = createSubstitutionRegex(escapedWord);
     const regex = new RegExp(`${regexString}\\w*`, 'gi');
@@ -88,4 +100,4 @@ function filterText(text) {
   return filteredText;
 }
 
-module.exports = { loadProfanity, add, filterText };
+module.exports = { loadWords, add, filterText };
