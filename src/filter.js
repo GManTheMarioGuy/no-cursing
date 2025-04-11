@@ -46,7 +46,12 @@ function add(word, level = 'PROFANE', isSafe = false) {
     return;
   }
 
-  wordList.push({ word, level });
+  const index = wordList.findIndex((entry) => entry.word === word);
+  if (index !== -1) {
+    wordList[index].level = level;
+  } else {
+    wordList.push({ word, level });
+  }
 }
 
 function createSubstitutionRegex(word) {
